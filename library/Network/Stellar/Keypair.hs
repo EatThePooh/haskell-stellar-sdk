@@ -17,7 +17,7 @@ module Network.Stellar.Keypair
     )where
 
 import           Control.Monad (guard)
-import           Crypto.Random.DRBG
+import           Crypto.Random
 import           Crypto.Sign.Ed25519
 import           Data.Bits
 import qualified Data.ByteString as B
@@ -41,8 +41,8 @@ instance Show KeyPair where
 
 generateKeypair :: IO KeyPair
 generateKeypair = do
-    gen <- newGenIO :: IO CtrDRBG
-    Right (randomBytes, _) <- pure $ genBytes 32 gen
+    gen <- getSystemDRG
+    let (randomBytes, _) = randomBytesGenerate 32 gen
     return $ fromSeed randomBytes
 
 fromSeed :: B.ByteString -> KeyPair

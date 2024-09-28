@@ -54,7 +54,7 @@ library
   ghc-options: -Wall
   build-depends:
       Cabal
-    , DRBG
+    , crypton
     , SHA
     , aeson
     , base
